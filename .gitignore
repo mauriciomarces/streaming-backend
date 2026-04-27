@@ -1,0 +1,36 @@
+# ─── Entornos / Secrets ────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Node / catalog-service ────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ─── Laravel / interaction-laravel ─────────────────────────────────────────────
+vendor/
+storage/logs/*
+storage/*.key
+storage/pail/
+public/build/
+public/hot/
+public/storage/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.phpunit.cache/
+.phpunit.result.cache
+auth.json
+
+# ─── OS / IDE ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.fleet/
+.nova/
+.zed/
+
+# ─── Docker ────────────────────────────────────────────────────────────────────
+# No se ignoran los Dockerfile ni docker-compose.yml (son necesarios)
