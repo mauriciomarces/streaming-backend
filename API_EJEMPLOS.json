@@ -1,0 +1,231 @@
+{
+  "ejemplos_api": {
+    "obtener_historial_usuario_1": {
+      "metodo": "GET",
+      "url": "http://localhost:8000/api/historial/usuario/1",
+      "respuesta_ejemplo": {
+        "data": [
+          {
+            "id": "507f1f77bcf86cd799439011",
+            "id_usuario": 1,
+            "id_contenido": "c001",
+            "titulo": "Dune: Parte Dos",
+            "tipo_contenido": "pelicula",
+            "progreso_segundos": 5000,
+            "duracion_total_segundos": 9840,
+            "porcentaje": 51,
+            "visto_completado": false,
+            "fecha_ultima_vista": "2026-04-28T14:30:00Z",
+            "poster_color": "#b5860d",
+            "poster_inicial": "D2",
+            "generos": ["Ciencia Ficción", "Aventura"]
+          }
+        ]
+      }
+    },
+    "ver_historial_ui": {
+      "metodo": "GET",
+      "url": "http://localhost:8000/api/historial/usuario/1/ui",
+      "descripcion": "Retorna HTML renderizado con interfaz bonita"
+    },
+    "crear_historial": {
+      "metodo": "POST",
+      "url": "http://localhost:8000/api/historial",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "id_usuario": 1,
+        "id_contenido": "c005",
+        "progreso_segundos": 2500
+      },
+      "respuesta_ejemplo": {
+        "id": "507f1f77bcf86cd799439012",
+        "id_usuario": 1,
+        "id_contenido": "c005",
+        "tipo_contenido": "pelicula",
+        "progreso_segundos": 2500,
+        "duracion_total_segundos": 8880,
+        "visto_completado": false,
+        "fecha_ultima_vista": "2026-04-28T14:35:00Z",
+        "dispositivo": "web"
+      }
+    },
+    "actualizar_historial": {
+      "metodo": "PUT",
+      "url": "http://localhost:8000/api/historial/507f1f77bcf86cd799439011",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "progreso_segundos": 7500,
+        "visto_completado": false
+      }
+    },
+    "obtener_estadisticas": {
+      "metodo": "GET",
+      "url": "http://localhost:8000/api/stats",
+      "respuesta_ejemplo": {
+        "total_historiales": 150,
+        "usuarios_unicos": 5,
+        "completados": 85,
+        "en_progreso": 65,
+        "usuarios": [
+          {
+            "id": 1,
+            "nombre": "Lucía Martínez",
+            "avatar_color": "#e50914",
+            "iniciales": "LM"
+          },
+          {
+            "id": 2,
+            "nombre": "Carlos Rodríguez",
+            "avatar_color": "#0077b6",
+            "iniciales": "CR"
+          }
+        ]
+      }
+    },
+    "obtener_catalogo": {
+      "metodo": "GET",
+      "url": "http://localhost:3001/contenido",
+      "descripcion": "Retorna la interfaz HTML del catálogo completo"
+    },
+    "sincronizar_catalogo": {
+      "metodo": "GET",
+      "url": "http://localhost:3001/seed",
+      "respuesta_ejemplo": {
+        "ok": true,
+        "insertados": 55
+      }
+    }
+  },
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Lucía Martínez",
+      "email": "lucia@streamflix.local",
+      "avatar_color": "#e50914",
+      "iniciales": "LM",
+      "descripcion": "Amante del cine de acción y ciencia ficción"
+    },
+    {
+      "id": 2,
+      "nombre": "Carlos Rodríguez",
+      "email": "carlos@streamflix.local",
+      "avatar_color": "#0077b6",
+      "iniciales": "CR",
+      "descripcion": "Fanático de las series de suspenso"
+    },
+    {
+      "id": 3,
+      "nombre": "Valentina López",
+      "email": "valentina@streamflix.local",
+      "avatar_color": "#7b2d8b",
+      "iniciales": "VL",
+      "descripcion": "Disfruta del drama y películas de fantasía"
+    },
+    {
+      "id": 4,
+      "nombre": "Diego Fernández",
+      "email": "diego@streamflix.local",
+      "avatar_color": "#2d9e5f",
+      "iniciales": "DF",
+      "descripcion": "Seguidor de comedias y películas ligeras"
+    },
+    {
+      "id": 5,
+      "nombre": "Isabella Torres",
+      "email": "isabella@streamflix.local",
+      "avatar_color": "#e5a009",
+      "iniciales": "IT",
+      "descripcion": "Apasionada por documentales y historias reales"
+    }
+  ],
+  "contenido_destacado": {
+    "peliculas": [
+      {
+        "id": "c001",
+        "titulo": "Dune: Parte Dos",
+        "anio": 2024,
+        "calificacion": 8.5,
+        "duracion": "2h 46m",
+        "generos": ["Ciencia Ficción", "Aventura"]
+      },
+      {
+        "id": "c013",
+        "titulo": "Interstellar",
+        "anio": 2014,
+        "calificacion": 8.7,
+        "duracion": "2h 49m",
+        "generos": ["Ciencia Ficción", "Drama"]
+      },
+      {
+        "id": "c008",
+        "titulo": "The Dark Knight",
+        "anio": 2008,
+        "calificacion": 9.0,
+        "duracion": "2h 32m",
+        "generos": ["Acción", "Crimen"]
+      }
+    ],
+    "series": [
+      {
+        "id": "c003",
+        "titulo": "Breaking Bad",
+        "anio": 2008,
+        "calificacion": 9.5,
+        "temporadas": 5,
+        "generos": ["Drama", "Crimen"]
+      },
+      {
+        "id": "c004",
+        "titulo": "Stranger Things",
+        "anio": 2016,
+        "calificacion": 8.7,
+        "temporadas": 4,
+        "generos": ["Terror", "Ciencia Ficción"]
+      },
+      {
+        "id": "c015",
+        "titulo": "Shogun",
+        "anio": 2024,
+        "calificacion": 8.9,
+        "temporadas": 1,
+        "generos": ["Drama", "Historia"]
+      }
+    ]
+  },
+  "pruebas_recomendadas": [
+    {
+      "numero": 1,
+      "descripcion": "Ver dashboard principal",
+      "url": "http://localhost:8000",
+      "esperado": "Debe mostrar 5 tarjetas de usuario con colores personalizados"
+    },
+    {
+      "numero": 2,
+      "descripcion": "Ver historial de Lucía (usuario 1)",
+      "url": "http://localhost:8000/api/historial/usuario/1/ui",
+      "esperado": "Debe mostrar el perfil de Lucía y sus títulos visualizados"
+    },
+    {
+      "numero": 3,
+      "descripcion": "Ver catálogo completo",
+      "url": "http://localhost:3001/contenido",
+      "esperado": "Grid responsive con 55+ películas y series"
+    },
+    {
+      "numero": 4,
+      "descripcion": "Obtener estadísticas en JSON",
+      "url": "http://localhost:8000/api/stats",
+      "esperado": "JSON con total de historiales y usuarios"
+    },
+    {
+      "numero": 5,
+      "descripcion": "Ver historial en JSON",
+      "url": "http://localhost:8000/api/historial/usuario/2",
+      "esperado": "Array de objetos con historial de Carlos"
+    }
+  ]
+}
