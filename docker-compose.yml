@@ -8,6 +8,14 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+      - ./docker-init:/docker-init
+    command: >
+      bash -c "
+        docker-entrypoint.sh mongod &
+        sleep 5 &&
+        mongorestore --drop /docker-init/mongo_dump &&
+        wait
+      "
 
   catalog-service:
     build: ./catalog-service
