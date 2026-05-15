@@ -24,7 +24,9 @@ services:
     depends_on:
       - mongodb
     environment:
+    - TMDB_API_KEY=a59f345ef30f114b753caab5a99d8354
     - MONGO_URI=mongodb://mongodb:27017/ContenidoDB
+    
 
   interaction-laravel:
     build: ./interaction-laravel

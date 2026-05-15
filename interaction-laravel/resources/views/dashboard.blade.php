@@ -6,43 +6,330 @@
 <title>StreamFlix — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0a0a0f 0%,#1a0a0a 100%);color:#e5e5e5;min-height:100vh}
-header{background:linear-gradient(135deg,rgba(0,0,0,0.8),rgba(255,0,0,0.05));padding:2rem;text-align:center;border-bottom:2px solid rgba(229,9,20,0.3);backdrop-filter:blur(10px)}
-.logo{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e50914,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
-.subtitle{color:#888;font-size:1rem}
-.container{max-width:1400px;margin:0 auto;padding:2rem}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:3rem}
-.stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(229,9,20,0.2);border-radius:12px;padding:1.5rem;transition:all .3s}
-.stat-card:hover{background:rgba(229,9,20,0.1);border-color:#e50914;transform:translateY(-4px)}
-.stat-label{color:#888;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
-.stat-value{font-size:2rem;font-weight:700;color:#ff6b6b}
-.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem}
-.user-card{background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(229,9,20,0.1));border:1px solid rgba(229,9,20,0.3);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer;text-decoration:none;color:inherit;display:flex;flex-direction:column}
-.user-card:hover{transform:translateY(-8px);border-color:#e50914;box-shadow:0 20px 40px rgba(229,9,20,0.2)}
-.user-header{padding:2rem;display:flex;align-items:center;gap:1.5rem;border-bottom:1px solid rgba(255,255,255,0.05)}
-.user-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;flex-shrink:0;border:3px solid rgba(255,255,255,0.1)}
-.user-info h2{font-size:1.2rem;margin-bottom:.3rem}
-.user-info p{font-size:.85rem;color:#888}
-.user-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:1.5rem;border-bottom:1px solid rgba(255,255,255,0.05)}
-.ustat{text-align:center}
-.ustat .num{font-size:1.5rem;font-weight:700;color:#ff6b6b;display:block}
-.ustat .label{font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.05em}
-.user-footer{padding:1.5rem;text-align:center;flex-grow:1;display:flex;align-items:flex-end;justify-content:center}
-.btn-view{background:linear-gradient(135deg,#e50914,#ff6b6b);color:#fff;border:none;border-radius:8px;padding:.75rem 1.5rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-block}
-.btn-view:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(229,9,20,0.4)}
-.section-title{font-size:1.5rem;font-weight:700;margin-bottom:2rem;color:#fff;display:flex;align-items:center;gap:1rem}
-.section-title:before{content:'';width:4px;height:24px;background:#e50914;border-radius:2px}
-footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2e;margin-top:3rem}
-.badge-active{display:inline-block;background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:.25rem .75rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}
-@media(max-width:768px){.logo{font-size:2rem}.users-grid{grid-template-columns:1fr}.stat-card{padding:1rem}.container{padding:1rem}}
+:root {
+  /* Tema claro */
+  --bg-primary: #FAFBFD;
+  --bg-secondary: #f0f1f5;
+  --text-primary: #27495F;
+  --text-secondary: #7D7ECF;
+  --accent-1: #E182CB;
+  --accent-2: #8AD5DF;
+  --border-color: #d0d2d8;
+  --card-bg: #ffffff;
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode {
+  /* Tema oscuro */
+  --bg-primary: #27495F;
+  --bg-secondary: #1f3a4a;
+  --text-primary: #FAFBFD;
+  --text-secondary: #8AD5DF;
+  --accent-1: #E182CB;
+  --accent-2: #7D7ECF;
+  --border-color: #3a5a6f;
+  --card-bg: #1f3a4a;
+  --overlay-bg: rgba(0, 0, 0, 0.8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+header {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, transparent 100%);
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 2px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.theme-toggle {
+  background: var(--accent-1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-2);
+  transform: scale(1.05);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent-1);
+  transform: translateY(-4px);
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-1);
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.user-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-1);
+  box-shadow: 0 20px 40px rgba(225, 130, 203, 0.15);
+}
+
+.user-header {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  border: 3px solid var(--border-color);
+}
+
+.user-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.user-info p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.user-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ustat {
+  text-align: center;
+}
+
+.ustat .num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-1);
+  display: block;
+}
+
+.ustat .label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.user-footer {
+  padding: 1.5rem;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.btn-view {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.btn-view:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(225, 130, 203, 0.4);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-title:before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: var(--accent-1);
+  border-radius: 2px;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 3rem;
+}
+
+.badge-active {
+  display: inline-block;
+  background: rgba(225, 130, 203, 0.15);
+  color: var(--accent-1);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.stat-card p {
+  color: var(--accent-1);
+  font-weight: 600;
+}
+
+footer a {
+  color: var(--accent-1);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 2rem;
+  }
+  .users-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-card {
+    padding: 1rem;
+  }
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .header-content {
+    flex: 1;
+  }
+}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">🎬 StreamFlix</div>
-  <p class="subtitle">Tu plataforma de streaming personal</p>
+  <div class="header-content">
+    <div class="logo">🎬 StreamFlix</div>
+    <p class="subtitle">Tu plataforma de streaming personal</p>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Oscuro</button>
 </header>
+
 <div class="container">
   <div class="stats-grid">
     <div class="stat-card">
@@ -150,14 +437,39 @@ footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px 
   <div class="stats-grid">
     <a href="http://localhost:3001/contenido" class="stat-card" style="text-decoration:none">
       <div class="stat-label">📚 Catálogo Completo</div>
-      <p style="color:#ff6b6b;font-weight:600">Ver todas las películas y series</p>
+      <p>Ver todas las películas y series</p>
     </a>
-    <a href="http://localhost:3001/seed" class="stat-card" style="text-decoration:none;background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3)">
+    <a href="http://localhost:3001/seed" class="stat-card" style="text-decoration:none">
       <div class="stat-label">🌱 Recargar Catálogo</div>
-      <p style="color:#4ade80;font-weight:600">Sincronizar con MongoDB</p>
+      <p>Sincronizar con MongoDB</p>
     </a>
   </div>
 </div>
-<footer>StreamFlix • Streaming Backend • © 2026</footer>
+
+<footer>StreamFlix • Streaming Backend • © 2026 | <a href="http://localhost:3001/contenido">Ver Catálogo</a></footer>
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.querySelector('.theme-toggle');
+
+    body.classList.toggle('dark-mode');
+
+    // Guardar preferencia
+    localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+
+    // Cambiar texto del botón
+    btn.textContent = body.classList.contains('dark-mode') ? '☀️ Claro' : '🌙 Oscuro';
+  }
+
+  // Cargar tema guardado al iniciar
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.querySelector('.theme-toggle').textContent = '☀️ Claro';
+    }
+  });
+</script>
 </body>
 </html>

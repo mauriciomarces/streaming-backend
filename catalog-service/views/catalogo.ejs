@@ -3,27 +3,179 @@
 <head>
   <title>Catálogo Streaming</title>
   <style>
-    body { font-family: Arial; background: #111; color: white; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .card {
-      background: #1e1e1e;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .tipo { font-size: 12px; opacity: 0.7; }
+
+    :root {
+      /* Tema claro */
+      --bg-primary: #FAFBFD;
+      --bg-secondary: #f0f1f5;
+      --text-primary: #27495F;
+      --text-secondary: #7D7ECF;
+      --accent-1: #E182CB;
+      --accent-2: #8AD5DF;
+      --border-color: #d0d2d8;
+      --card-bg: #ffffff;
+    }
+
+    body.dark-mode {
+      /* Tema oscuro */
+      --bg-primary: #27495F;
+      --bg-secondary: #1f3a4a;
+      --text-primary: #FAFBFD;
+      --text-secondary: #8AD5DF;
+      --accent-1: #E182CB;
+      --accent-2: #7D7ECF;
+      --border-color: #3a5a6f;
+      --card-bg: #1f3a4a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+      padding: 2rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .theme-toggle {
+      background: var(--accent-1);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-2);
+      transform: scale(1.05);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      border-color: var(--accent-1);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .tipo {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      background: var(--bg-secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .duracion {
+      font-size: 0.9rem;
+      color: var(--accent-2);
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
-  <h1>🎬 Catálogo de Contenido</h1>
+  <header>
+    <h1>🎬 Catálogo de Contenido</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Oscuro</button>
+  </header>
+
   <div class="grid">
     <% contenidos.forEach(c => { %>
       <div class="card">
+        <img src="<%= c.poster %>" alt="<%= c.titulo %>" style="width:100%; border-radius:10px;">
         <h3><%= c.titulo %></h3>
         <div class="tipo"><%= c.tipo %></div>
-        <p><%= Math.floor(c.duracion_segundos/60) %> min</p>
+        <div class="calificacion">⭐ <%= c.calificacion %></div>
       </div>
     <% }) %>
   </div>
+
+  <footer>
+    <p>StreamFlix Catalog — Todos tus contenidos en un solo lugar</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      
+      body.classList.toggle('dark-mode');
+      
+      // Guardar preferencia
+      localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+      
+      // Cambiar texto del botón
+      btn.textContent = body.classList.contains('dark-mode') ? '☀️ Claro' : '🌙 Oscuro';
+    }
+
+    // Cargar tema guardado al iniciar
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.theme-toggle').textContent = '☀️ Claro';
+      }
+    });
+  </script>
 </body>
 </html>
